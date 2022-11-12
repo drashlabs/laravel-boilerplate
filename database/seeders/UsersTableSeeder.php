@@ -40,7 +40,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'user@gmail.com',
             'email_verified_at' => Carbon::now(),
             'phone' => '0716478394',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('userpassword'),
         ]);
     }
 
