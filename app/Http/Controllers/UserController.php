@@ -185,7 +185,7 @@ class UserController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'phone' => ['required|numeric|min:10|unique:users'],
+            'phone' => ['required', 'numeric', 'min:10', 'unique:users'],
             'roles' => ['nullable', 'exists:roles,id'],
         ]);
 
