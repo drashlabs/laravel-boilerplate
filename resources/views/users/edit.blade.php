@@ -50,6 +50,21 @@
         </span>
             @enderror
         </div>
+        <div class="form-group">
+            <label for="phone" class="sr-only">Phone Number</label>
+            <input type="text"
+                   id="phone"
+                   name="phone"
+                   class="form-control @error('phone') is-invalid @enderror"
+                   value="{{ old('phone') ?? $user->phone }}"
+                   required
+                   placeholder="Phone Number">
+            @error('phone')
+            <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+            @enderror
+        </div>
         @can('users.edit')
             <div class="px-2">
                 @foreach ($roles as $role)

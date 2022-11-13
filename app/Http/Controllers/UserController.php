@@ -82,6 +82,7 @@ class UserController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['required', 'numeric', 'min:10', 'unique:users'],
             'roles' => ['nullable', 'exists:roles,id'],
         ]);
 
@@ -91,6 +92,7 @@ class UserController extends Controller
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
+                'phone' => $request->phone,
                 'password' => Hash::make($this->generateUuid()),
             ]);
 
@@ -183,6 +185,7 @@ class UserController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'phone' => ['required', 'numeric', 'min:10', 'unique:users'],
             'roles' => ['nullable', 'exists:roles,id'],
         ]);
 
