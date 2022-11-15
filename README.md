@@ -20,8 +20,9 @@
 1. Update the ```.env``` with your project settings
 1. Setup [Scheduling](https://laravel.com/docs/6.x/scheduling) and [Queues](https://laravel.com/docs/6.x/queues)
 1. Update ```UsersTableSeeder``` with your details.
-1. Migrate and seed the database.
-1. Serve your project, explore and build something awesome.
+1. Migrate  by running the command ```php artisan migrate```
+2. Seed the database by running the command ```php artisan db:seed```
+3. Serve your project by running the command ```php artisan serve``` explore and build something awesome.
 
 ## Communication
 
