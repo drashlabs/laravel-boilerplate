@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
@@ -15,4 +16,12 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    // ** verify
+ 
+    public function __construct()
+
+    {
+      $this->middleware(['auth', 'verified']);  
+    }  
 }

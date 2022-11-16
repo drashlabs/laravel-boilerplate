@@ -41,4 +41,7 @@ Route::namespace('App\Http\Controllers\Admin')->middleware(['auth', 'verified'])
     Route::resource('permissions', PermissionController::class);
 
     Route::get('/audits', 'AuditController@auditing')->name('auditing.index');
+    
+
+    
 });
