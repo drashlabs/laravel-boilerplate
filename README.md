@@ -20,6 +20,7 @@
 1. Update the ```.env``` with your project settings
 1. Setup [Scheduling](https://laravel.com/docs/6.x/scheduling) and [Queues](https://laravel.com/docs/6.x/queues)
 1. Update ```UsersTableSeeder``` with your details.
+1. Run ```composer install --ignore-platform-reqs```command. This will gracefully ignore restrictions when the versions don't match up while running the code.
 1. Migrate and seed the database.
 1. Serve your project, explore and build something awesome.
 
