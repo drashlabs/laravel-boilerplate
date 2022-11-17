@@ -17,11 +17,5 @@ class HomeController extends Controller
         return view('home');
     }
 
-    // ** verify
- 
-    public function __construct()
-
-    {
-      $this->middleware(['auth', 'verified']);  
-    }  
+    
 }
