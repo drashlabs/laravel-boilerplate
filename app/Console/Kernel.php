@@ -2,8 +2,10 @@
 
 namespace App\Console;
 
+use Illuminate\Console\Command;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Psy\TabCompletion\Matcher\CommandsMatcher;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,6 +16,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        Commands\BackupRun::class,
+        Commands\BackupClean::class
     ];
 
     /**
