@@ -1,8 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
+// use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +27,10 @@ Auth::routes([
 
 Route::match(['get', 'put'], '/users/{token}/welcome', [\App\Http\Controllers\Auth\WelcomeController::class, 'setPassword'])->name('users.welcome');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/users/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
-    Route::resource('users', UserController::class)->except('show', 'edit', 'update');
-});
+// Route::middleware(['auth', 'verified'])->group(function () {
+//     Route::get('/users/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
+//     Route::resource('users', UserController::class)->except('show', 'edit', 'update');
+// });
 
 Route::resource('users', UserController::class)->only('show', 'edit', 'update')->middleware('auth');
 
