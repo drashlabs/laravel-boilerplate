@@ -26,7 +26,12 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('backup:run --only-db')->everyFifteenMinutes()->withoutOverlapping();
         $schedule->command('backup:clean')->daily();
+     
+    
+                
     }
+
+    
 
     /**
      * Register the commands for the application.
