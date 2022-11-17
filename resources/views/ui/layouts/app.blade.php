@@ -7,9 +7,13 @@
     <div class="container-fluid page-body-wrapper">
         @include('ui.includes.app.sidebar')
         <div class="main-panel">
-            @include('ui.components.alert')
+
+                @include('ui.components.alert')
+
             <div class="content-wrapper">
                 @yield('content')
+
+
             </div>
             @include('ui.includes.app.footer')
         </div>

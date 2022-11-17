@@ -8,6 +8,7 @@
         @include('ui.includes.app.sidebar')
         <div class="main-panel">
             @include('ui.components.alert')
+           
             <div class="content-wrapper">
                 @yield('content')
             </div>

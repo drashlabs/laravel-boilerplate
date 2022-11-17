@@ -12,9 +12,9 @@
             <span class="mdi mdi-menu"></span>
         </button>
         <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item">
+           <li class="nav-item">
                 <a class="nav-link" href="{{ route('home') }}">
-                    <i class="fas fa-home" title="Dashboard"></i>
+                    <i class="fas fa-home" title="Add student"></i>
                 </a>
             </li>
             <li class="nav-item nav-profile">

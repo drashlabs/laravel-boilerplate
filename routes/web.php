@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\studentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +18,16 @@ use App\Http\Controllers\WelcomeController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
+Route::get('/home', 'studentController@index')->name('home')->middleware(['auth', 'verified']);
+Route::delete('/home/{id}', 'studentController@destory')->name('remove')->middleware(['auth', 'verified']);
+Route::post('student/registerstudent', 'studentController@store')->name('student.register')->middleware(['auth', 'verified']);
 
 Auth::routes([
     'verify' => true,
 ]);
-
+Route::post('student/registerstudent', [\App\Http\Controllers\studentController::class, 'store'])->name('student.register')->middleware(['auth', 'verified']);
+Route::get('/home', [\App\Http\Controllers\studentController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
+Route::delete('/home/{id}', [\App\Http\Controllers\studentController::class, 'destroy'])->name('remove')->middleware(['auth', 'verified']);
 Route::match(['get', 'put'], '/users/{token}/welcome', [\App\Http\Controllers\Auth\WelcomeController::class, 'setPassword'])->name('users.welcome');
 
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -17,6 +17,7 @@
                 <i class="fas fa-home menu-icon"></i>
             </a>
         </li>
+
         @can('users.index')
         <li class="nav-item {{ (Request::is('setup/users/*') || Request::is('users/*')) ? 'active' : null }}">
             <a class="nav-link" href="{{ route('users.index') }}">
