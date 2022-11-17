@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
             'uuid' => $this->generateUuid(),
             'first_name' => 'Dennis',
             'last_name' => 'Siameto',
-            'email' => 'dennohsyam@gmail.com',
+            'email' => 'dennohsyam12@gmail.com',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
         ]);
