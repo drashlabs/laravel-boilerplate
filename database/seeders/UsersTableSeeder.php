@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Http\Controllers\Admin\RoleController;
 use App\Models\User;
 use App\Traits\Utilities;
 use Carbon\Carbon;
@@ -24,9 +25,9 @@ class UsersTableSeeder extends Seeder
         // Create a super user account.
         $this->createSuperUser([
             'uuid' => $this->generateUuid(),
-            'first_name' => 'Ndirangu',
-            'last_name' => 'Waweru',
-            'email' => 'nwaweru@drash.co.ke',
+            'first_name' => 'Joseph',
+            'last_name' => 'Wakahu',
+            'email' => 'josephwakahu12@gmail.com',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
         ]);
@@ -34,9 +35,9 @@ class UsersTableSeeder extends Seeder
         // Create a normal user account.
         $this->createNormalUser([
             'uuid' => $this->generateUuid(),
-            'first_name' => 'Ndirangu',
-            'last_name' => 'Waweru',
-            'email' => 'ndiranguwaweru@gmail.com',
+            'first_name' => 'Joseph',
+            'last_name' => 'Wakahu',
+            'email' => 'josephwakahu12@gmail.com',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
         ]);
