@@ -1,26 +1,16 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ListingsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
-
-Auth::routes([
-    'verify' => true,
-]);
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(['auth']);
+Route::get('/listings', [ListingsController::class, 'index'])->name('listings');
+Route::resource('listings',ListingsController::class)->only('create','show', 'edit', 'update','store');
+Auth::routes();
 
 Route::match(['get', 'put'], '/users/{token}/welcome', [\App\Http\Controllers\Auth\WelcomeController::class, 'setPassword'])->name('users.welcome');
 

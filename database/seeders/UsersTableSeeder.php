@@ -40,6 +40,22 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
         ]);
+        // $this->createSuperUser([
+        //     'uuid' => $this->generateUuid(),
+        //     'first_name' => 'Collins',
+        //     'last_name' => 'Rono',
+        //     'email' => 'ronocollins2000@gmail.com',
+        //     'email_verified_at' => Carbon::now(),
+        //     'password' => Hash::make('password'),
+        // ]);
+        $this->createNormalUser([
+            'uuid' => $this->generateUuid(),
+            'first_name' => 'Collins',
+            'last_name' => 'Rono',
+            'email' => 'ronokipcollins@gmail.com',
+            'email_verified_at' => Carbon::now(),
+            'password' => Hash::make('password'),
+        ]);
     }
 
     /**

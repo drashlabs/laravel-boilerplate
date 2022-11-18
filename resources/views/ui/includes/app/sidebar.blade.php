@@ -41,5 +41,15 @@
             </a>
         </li>
         @endcan
+        @if(Auth::user()->role == "")
+
+{{--            <h3>A super user won't see this A super user won't see this A super user won't see this A super user won't see this A super user won't see this</h3>--}}
+            <li class="nav-item {{Request::is('listings')? 'active': null}}">
+                <a class="nav-link" href="{{ route('listings') }}">
+                    <span class="menu-title">My Listings</span>
+                    <i class="fas fa-clipboard-check menu-icon"></i>
+                </a>
+            </li>
+        @endif
     </ul>
 </nav>
