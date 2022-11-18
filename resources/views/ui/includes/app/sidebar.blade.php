@@ -11,10 +11,20 @@
                 </div>
             </a>
         </li>
+
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('home') }}">
-                <span class="menu-title">Dashboard</span>
-                <i class="fas fa-home menu-icon"></i>
+            <a class="nav-link" href="{{ route('tasks.index') }}">
+                <span class="menu-title">My Tasks</span>
+                <i class="fa fa-book fa-fw menu-icon"></i>
+            </a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('users.show', ['user' => Auth::user()->uuid]) }}">
+                <span class="menu-title">Settings</span>
+                <i class="fa fa-cog menu-icon"></i>
+
             </a>
         </li>
         @can('users.index')
@@ -24,6 +34,14 @@
                 <i class="fas fa-user-tag menu-icon"></i>
             </a>
         </li>
+        @endcan
+        @can('users.index')
+            <li class="nav-item {{ (Request::is('setup/users/*') || Request::is('users/*')) ? 'active' : null }}">
+                <a class="nav-link" href="{{ route('indexOfall') }}">
+                    <span class="menu-title">All Tasks</span>
+                    <i class="fa fa-book fa-fw menu-icon"></i>
+                </a>
+            </li>
         @endcan
         @canany(['permissionGroups.index', 'permissions.index', 'roles.index',])
         <li class="nav-item {{ (Request::is('setup/roles/*') || Request::is('setup/permissions/*') || Request::is('setup/permissionGroups/*')) ? 'active' : null }}">
