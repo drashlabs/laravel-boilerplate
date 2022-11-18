@@ -32,7 +32,7 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'id'
     ];
 
     /**
@@ -43,6 +43,16 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 
     /**
      * Get the user's preferred locale.

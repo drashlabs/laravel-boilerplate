@@ -15,7 +15,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
@@ -133,13 +132,11 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function show($uuid)
+    public function show(User $user)
     {
-        ($uuid !== Auth::user()->uuid) && $this->authorize('users.show');
+        ($user->uuid !== Auth::user()->uuid) && $this->authorize('users.show');
 
-        return view('users.show', [
-            'user' => User::where('uuid', $uuid)->firstOrFail(),
-        ]);
+        return view('users.show', ['user' => $user ]);
     }
 
     /**
@@ -148,11 +145,9 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function edit($uuid)
+    public function edit(User $user)
     {
-        ($uuid !== Auth::user()->uuid) && $this->authorize('users.edit');
-
-        $user = User::where('uuid', $uuid)->firstOrFail();
+        ($user->uuid !== Auth::user()->uuid) && $this->authorize('users.edit');
 
         return view('users.edit', [
             'user' => $user,
@@ -168,11 +163,9 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function update(UpdateUserRequest $request, $uuid)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        ($uuid !== Auth::user()->uuid) && $this->authorize('users.edit');
-
-        $user = User::where('uuid', $uuid)->firstOrFail();
+        ($user->uuid !== Auth::user()->uuid) && $this->authorize('users.edit');
 
         try {
             if ($request->email !== $user->email) {
@@ -208,16 +201,14 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function delete($uuid)
+    public function delete(User $user)
     {
         $this->authorize('users.delete');
 
         // You cannot delete your own account.
-        ($uuid === Auth::user()->uuid) && abort(403);
+        ($user->uuid === Auth::user()->uuid) && abort(403);
 
-        return view('users.delete', [
-            'user' => User::where('uuid', $uuid)->firstOrFail(),
-        ]);
+        return view('users.delete', [ 'user' => $user ]);
     }
 
     /**
@@ -226,15 +217,14 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function destroy($uuid)
+    public function destroy(User $user)
     {
         $this->authorize('users.delete');
 
-        ($uuid === Auth::user()->uuid) && abort(403);
+        ($user->uuid === Auth::user()->uuid) && abort(403);
 
         try {
-            User::where('uuid', $uuid)->firstOrFail()->delete();
-
+            $user->delete();
             return redirect()->route('users.index');
         } catch (Exception $ex) {
             Log::error($ex);
