@@ -9,6 +9,8 @@ use App\Traits\Utilities;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use \App\Http\Requests\NewUserRequest;
+use \App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -71,19 +73,12 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  \App\Http\Requests\NewUserRequest  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(NewUserRequest $request)
     {
         $this->authorize('users.create');
-
-        $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'roles' => ['nullable', 'exists:roles,id'],
-        ]);
 
         try {
             $user = User::create([
@@ -173,18 +168,11 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function update(Request $request, $uuid)
+    public function update(UpdateUserRequest $request, $uuid)
     {
         ($uuid !== Auth::user()->uuid) && $this->authorize('users.edit');
 
         $user = User::where('uuid', $uuid)->firstOrFail();
-
-        $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'roles' => ['nullable', 'exists:roles,id'],
-        ]);
 
         try {
             if ($request->email !== $user->email) {
