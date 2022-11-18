@@ -120,4 +120,8 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
     {
         return '';
     }
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }
