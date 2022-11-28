@@ -22,11 +22,18 @@
                         <input type="password" id="password" name="password"
                                class="form-control @error('password') is-invalid @enderror"
                                required placeholder="Password">
-                        @error('password')
+                               @error('password')
+                        <!-- adds toggle to view password while typing -->
+
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                         @enderror
+                    </div>
+                    <!-- toggle password for view -->
+                    <div class="form-group form-check ">
+                        <input type="checkbox" class="form-check-input ml-2" id="togglePassword">
+                        <label class="form-check-label" for="exampleCheck1">Show Password</label>
                     </div>
                     <button type="submit"
                             class="btn btn-block btn-primary">
@@ -51,3 +58,18 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+const togglePassword = document.getElementById('togglePassword');
+const password = document.getElementById("password");
+
+//listens to clicks of the checkbox
+togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    //sets attribute to the toggled type
+    password.setAttribute('type', type);
+});
+    </script>
+@endpush
