@@ -24,11 +24,16 @@
                                required placeholder="Password">
                                @error('password')
                         <!-- adds toggle to view password while typing -->
-                        <input type="checkbox" id="togglePassword" style="margin: 30px 0; cursor: pointer;"> Show Password
+
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                         @enderror
+                    </div>
+                    <!-- toggle password for view -->
+                    <div class="form-group form-check ">
+                        <input type="checkbox" class="form-check-input ml-2" id="togglePassword">
+                        <label class="form-check-label" for="exampleCheck1">Show Password</label>
                     </div>
                     <button type="submit"
                             class="btn btn-block btn-primary">
