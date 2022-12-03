@@ -9,11 +9,12 @@ use App\Traits\Utilities;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use \App\Http\Requests\NewUserRequest;
+use \App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
@@ -71,19 +72,12 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  \App\Http\Requests\NewUserRequest  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(NewUserRequest $request)
     {
         $this->authorize('users.create');
-
-        $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'roles' => ['nullable', 'exists:roles,id'],
-        ]);
 
         try {
             $user = User::create([
@@ -138,13 +132,11 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function show($uuid)
+    public function show(User $user)
     {
-        ($uuid !== Auth::user()->uuid) && $this->authorize('users.show');
+        ($user->uuid !== Auth::user()->uuid) && $this->authorize('users.show');
 
-        return view('users.show', [
-            'user' => User::where('uuid', $uuid)->firstOrFail(),
-        ]);
+        return view('users.show', ['user' => $user ]);
     }
 
     /**
@@ -153,11 +145,9 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function edit($uuid)
+    public function edit(User $user)
     {
-        ($uuid !== Auth::user()->uuid) && $this->authorize('users.edit');
-
-        $user = User::where('uuid', $uuid)->firstOrFail();
+        ($user->uuid !== Auth::user()->uuid) && $this->authorize('users.edit');
 
         return view('users.edit', [
             'user' => $user,
@@ -173,18 +163,9 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function update(Request $request, $uuid)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        ($uuid !== Auth::user()->uuid) && $this->authorize('users.edit');
-
-        $user = User::where('uuid', $uuid)->firstOrFail();
-
-        $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'roles' => ['nullable', 'exists:roles,id'],
-        ]);
+        ($user->uuid !== Auth::user()->uuid) && $this->authorize('users.edit');
 
         try {
             if ($request->email !== $user->email) {
@@ -220,16 +201,14 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function delete($uuid)
+    public function delete(User $user)
     {
         $this->authorize('users.delete');
 
         // You cannot delete your own account.
-        ($uuid === Auth::user()->uuid) && abort(403);
+        ($user->uuid === Auth::user()->uuid) && abort(403);
 
-        return view('users.delete', [
-            'user' => User::where('uuid', $uuid)->firstOrFail(),
-        ]);
+        return view('users.delete', [ 'user' => $user ]);
     }
 
     /**
@@ -238,15 +217,14 @@ class UserController extends Controller
      * @param  string  $uuid
      * @return Response
      */
-    public function destroy($uuid)
+    public function destroy(User $user)
     {
         $this->authorize('users.delete');
 
-        ($uuid === Auth::user()->uuid) && abort(403);
+        ($user->uuid === Auth::user()->uuid) && abort(403);
 
         try {
-            User::where('uuid', $uuid)->firstOrFail()->delete();
-
+            $user->delete();
             return redirect()->route('users.index');
         } catch (Exception $ex) {
             Log::error($ex);
